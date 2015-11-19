@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --compilers js:babel-core/register --require ./test/setup.js  --recursive"
   },
   "keywords": [],
   "author": "",
@@ -19,5 +19,8 @@
   },
   "dependencies": {
     "immutable": "^3.7.5"
+  },
+  "babel": {
+    "presets" : ["es2015"]
   }
 }
