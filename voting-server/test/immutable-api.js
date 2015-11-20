@@ -45,5 +45,26 @@ describe('immutability examples', () => {
 	    }));
 	});
     });
+
+    describe('a map', () => {
+	let addItemToMapKey = (map, key, item) => map.update(key, items => items.push(item))
+
+	it('updates the key', () => {
+	    let mapA = Map({
+		items: List.of(1, 2, 3)
+	    });
+
+	    let mapB = addItemToMapKey(mapA, 'items', 4);
+
+	    expect(mapB).to.equal(Map({
+		items: List.of(1, 2, 3, 4)
+	    }));
+	    
+	    expect(mapA).to.equal(Map({
+		items: List.of(1, 2, 3)
+	    }));
+	});
+    });
+
 });
     
