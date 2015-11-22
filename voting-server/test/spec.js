@@ -3,6 +3,7 @@ import {expect} from 'chai';
 
 import {setEntries} from '../src/application';
 import {startNewVote} from '../src/application';
+import {vote} from '../src/application';
 
 describe('application logic', () => {
     describe('setEntries', () => {
@@ -19,17 +20,37 @@ describe('application logic', () => {
 
     describe('startNewVote', () => {
 	it('moves two entries to vote', () => {
-	    const appState = Map({
+	    const initAppState = Map({
 		entries: List.of('a', 'b', 'c')
 	    });
 
-	    const newAppState = startNewVote(appState);
+	    const newAppState = startNewVote(initAppState);
 
 	    expect(newAppState).to.equal(Map({
 		entries: List.of('c'),
 		vote: List.of(
 		    Map({ item: 'a', score: 0 }),
 		    Map({ item: 'b', score: 0 })
+		)
+	    }));
+	});
+    });
+
+    describe('vote', () => {
+	it('increments score of item', () => {
+	    const initAppState = Map({
+		vote: List.of(
+		    Map({ item: 'a', score: 0 }),
+		    Map({ item: 'b', score: 0 })
+		)
+	    });
+
+	    const newAppState = vote(initAppState, 'b');
+
+	    expect(newAppState).to.equal(Map({
+		vote: List.of(
+		    Map({ item: 'a', score: 0 }),
+		    Map({ item: 'b', score: 1 })
 		)
 	    }));
 	});
