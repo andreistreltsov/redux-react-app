@@ -4,6 +4,7 @@ import {expect} from 'chai';
 import {setEntries} from '../src/application';
 import {startNewVote} from '../src/application';
 import {vote} from '../src/application';
+import {endVote} from '../src/application';
 
 describe('application logic', () => {
     describe('setEntries', () => {
@@ -54,5 +55,36 @@ describe('application logic', () => {
 		)
 	    }));
 	});
+    });
+
+    describe('end vote', () => {
+	it('puts winner back to entries', () => {
+	    const initAppState = Map({
+		entries: List.of('c'),
+		vote: List.of(
+		    Map({ item: 'a', score: 1 }),
+		    Map({ item: 'b', score: 2 })
+		)
+	    });
+
+	    const newAppState = endVote(initAppState);
+
+	    expect(newAppState.get('entries')).to.equal(List.of('c','b'));
+	});
+
+	it('puts both back to entries if tie', () => {
+	    const initAppState = Map({
+		entries: List.of('c'),
+		vote: List.of(
+		    Map({ item: 'a', score: 2 }),
+		    Map({ item: 'b', score: 2 })
+		)
+	    });
+
+	    const newAppState = endVote(initAppState);
+
+	    expect(newAppState.get('entries')).to.equal(List.of('c', 'a', 'b'));
+	});
+
     });
 });

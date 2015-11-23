@@ -15,13 +15,20 @@ export function startNewVote(appState){
 
 export function vote(appState, itemToVoteFor){
     const vote = appState.get('vote');
-    const ii = vote.update(
-	vote.findIndex(x => x.get('item') === itemToVoteFor),
-	itemScore => itemScore.update('score', x => x + 1));
 
     return appState.merge({
 	vote: vote.update(
 	    vote.findIndex(x => x.get('item') === itemToVoteFor),
 	    itemScore => itemScore.update('score', x => x + 1))
     });
+}
+
+export function endVote(appState){
+    function winners(){
+	const votedItems = appState.get('vote');
+	const topScore = votedItems.maxBy(item => item.get('score')).get('score');
+	return votedItems.filter(item => item.get('score') === topScore).map(i => i.get('item'));
+    }
+
+    return appState.update('entries', e => e.concat(winners()));
 }
