@@ -24,11 +24,23 @@ export function vote(appState, itemToVoteFor){
 }
 
 export function endVote(appState){
-    function winners(){
+    function winners() {
 	const votedItems = appState.get('vote');
 	const topScore = votedItems.maxBy(item => item.get('score')).get('score');
 	return votedItems.filter(item => item.get('score') === topScore).map(i => i.get('item'));
     }
 
-    return appState.update('entries', e => e.concat(winners()));
+    const remainingEntries = appState.get('entries').concat(winners());
+
+    const canDelareWinner = remainingEntries.size === 1;
+
+    if (canDelareWinner){
+	return appState
+	    .set('winner', remainingEntries.first())
+	    .set('entries', List())
+	    .set('vote', List());
+
+    }
+
+    return appState.set('entries', remainingEntries);
 }

@@ -86,5 +86,19 @@ describe('application logic', () => {
 	    expect(newAppState.get('entries')).to.equal(List.of('c', 'a', 'b'));
 	});
 
+	it('declares winner if last entrie', () => {
+	    const initAppState = Map({
+		entries: List.of(),
+		vote: List.of(
+		    Map({ item: 'a', score: 3 }),
+		    Map({ item: 'b', score: 2 })
+		)
+	    });
+
+	    const newAppState = endVote(initAppState);
+
+	    expect(newAppState.get('winner')).to.equal('a');
+	});
+
     });
 });
