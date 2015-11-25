@@ -1,7 +1,7 @@
 import {List, Map} from 'immutable';
 
 export function setEntries(appState, entries){
-    return appState.set('entries', entries);
+    return appState.set('entries', List(entries));
 }
 
 export function startNewVote(appState){
