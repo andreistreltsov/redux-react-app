@@ -1,10 +1,7 @@
 import {List, Map, fromJS} from 'immutable';
 import {expect} from 'chai';
 
-import {setEntries} from '../src/application';
-import {startNewVote} from '../src/application';
-import {vote} from '../src/application';
-import {endVote} from '../src/application';
+import {setEntries, startNewVote, vote, endVote, INITIAL_STATE} from '../src/application';
 import {reduce} from '../src/reducer';
 
 describe('reducer', () => {
@@ -43,6 +40,13 @@ describe('reducer', () => {
 	});
 	const newAppState = reduce(initAppState, { type: 'END_VOTE' });
 	const expectedAppState = endVote(initAppState);
+
+	expect(newAppState).to.equal(expectedAppState);
+    });
+
+    it('creates initial state', () => {
+	const newAppState = reduce(undefined, { type: 'SET_ENTRIES', entries: ['a', 'b', 'c']});
+	const expectedAppState = setEntries(INITIAL_STATE, ['a', 'b', 'c']);
 
 	expect(newAppState).to.equal(expectedAppState);
     });
