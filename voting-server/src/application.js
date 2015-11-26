@@ -1,4 +1,4 @@
-import {List, Map} from 'immutable';
+import {List, Map, fromJS} from 'immutable';
 
 export const INITIAL_STATE = Map();
 
@@ -15,14 +15,10 @@ export function startNewVote(appState){
     });
 }
 
-export function vote(appState, itemToVoteFor){
-    const vote = appState.get('vote');
-
-    return appState.merge({
-	vote: vote.update(
-	    vote.findIndex(x => x.get('item') === itemToVoteFor),
-	    itemScore => itemScore.update('score', x => x + 1))
-    });
+export function vote(voteState, itemToVoteFor){
+    return voteState.update(
+	voteState.findIndex(x => x.get('item') === itemToVoteFor),
+	itemScore => itemScore.update('score', x => x + 1));
 }
 
 export function endVote(appState){

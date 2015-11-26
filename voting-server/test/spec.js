@@ -1,4 +1,4 @@
-import {List, Map} from 'immutable';
+import {List, Map, fromJS} from 'immutable';
 import {expect} from 'chai';
 
 import {setEntries} from '../src/application';
@@ -39,21 +39,17 @@ describe('application logic', () => {
 
     describe('vote', () => {
 	it('increments score of item', () => {
-	    const initAppState = Map({
-		vote: List.of(
-		    Map({ item: 'a', score: 0 }),
-		    Map({ item: 'b', score: 0 })
-		)
-	    });
+	    const initVoteState = fromJS([
+		{ item: 'a', score: 0 },
+		{ item: 'b', score: 0 }
+	    ]);
 
-	    const newAppState = vote(initAppState, 'b');
+	    const newVoteState = vote(initVoteState, 'b');
 
-	    expect(newAppState).to.equal(Map({
-		vote: List.of(
-		    Map({ item: 'a', score: 0 }),
-		    Map({ item: 'b', score: 1 })
-		)
-	    }));
+	    expect(newVoteState).to.equal(fromJS([
+		{ item: 'a', score: 0 },
+		{ item: 'b', score: 1 }
+	    ]));
 	});
     });
 

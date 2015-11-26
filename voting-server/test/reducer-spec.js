@@ -22,11 +22,11 @@ describe('reducer', () => {
     });
 
     it('handles vote', () => {
-	const initAppState = fromJS({vote: [
+	const initVoteState = fromJS([
 	    {item: 'a', score: 0},
-	    {item: 'b', score: 0}]});
-	const newAppState = reduce(initAppState, { type: 'VOTE', item: 'a' });
-	const expectedAppState = vote(initAppState, 'a');
+	    {item: 'b', score: 0}]);
+	const newAppState = reduce(initVoteState, { type: 'VOTE', item: 'a' });
+	const expectedAppState = vote(initVoteState, 'a');
 
 	expect(newAppState).to.equal(expectedAppState);
     });
