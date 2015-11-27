@@ -2,7 +2,7 @@ import {List, Map, fromJS} from 'immutable';
 import {expect} from 'chai';
 
 import {setEntries, startNewVote, vote, endVote, INITIAL_STATE} from '../src/application';
-import {reduce} from '../src/reducer';
+import reduce from '../src/reducer';
 
 describe('reducer', () => {
     it('hadles SET_ENTRIES', () => {
