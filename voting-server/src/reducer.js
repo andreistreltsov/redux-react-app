@@ -1,6 +1,6 @@
 import {setEntries, startNewVote, vote, endVote, INITIAL_STATE} from '../src/application';
 
-export function reduce(state = INITIAL_STATE, action){
+export default function reduce(state = INITIAL_STATE, action){
     switch(action.type){
     case 'SET_ENTRIES':
 	return setEntries(state, action.entries);
