@@ -1,12 +1,14 @@
 module.exports = {
   entry: [
-    './src/index.js'
+    './src/index.js',
+    'webpack-dev-server/client?http://localhost:8080',
+    'webpack/hot/only-dev-server'
   ],
   module: {
     loaders: [{
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      loader: 'babel'
+      loader: 'react-hot!babel'
     }]
   },
   resolve: {
@@ -19,5 +21,8 @@ module.exports = {
   },
   devServer: {
     contentBase: './dist'
-  }
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ]
 };
